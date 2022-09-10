@@ -88,14 +88,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\ouass\Desktop\INF8500\systemc-2.3.3\src;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\ouass\Desktop\INF8500\systemc-2.3.3\msvc10\SystemC\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\laulj\Documents\Poly\A2022\INF8500\SystemC&amp;exemple\systemc-2.3.3\src;C:\Users\ouass\Desktop\INF8500\systemc-2.3.3\src;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\laulj\Documents\Poly\A2022\INF8500\SystemC&amp;exemple\systemc-2.3.3\msvc10\SystemC\Debug;C:\Users\ouass\Desktop\INF8500\systemc-2.3.3\msvc10\SystemC\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\laulj\Documents\Poly\A2022\INF8500\SystemC&amp;exemple\systemc-2.3.3\src;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\laulj\Documents\Poly\A2022\INF8500\SystemC&amp;exemple\systemc-2.3.3\msvc10\SystemC\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -134,12 +136,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>systemc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -148,7 +152,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
