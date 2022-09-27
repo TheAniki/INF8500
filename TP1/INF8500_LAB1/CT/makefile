@@ -1,6 +1,6 @@
 ### Variables ###
-PROJETINC	=	'/usr/local/systemc/include'
-PROJETLIB	=	'/usr/local/systemc/lib-linux64'
+PROJETINC	=	'/home/ouassim/Desktop/INF8500/Lab1/TP1/INF8500_LAB1/systemc/include'
+PROJETLIB	=	'/home/ouassim/Desktop/INF8500/Lab1/TP1/INF8500_LAB1/systemc/lib'
 
 AS	    =	as
 CC	    =	g++
