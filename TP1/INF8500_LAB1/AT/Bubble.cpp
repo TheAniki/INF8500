@@ -19,6 +19,7 @@ Bubble::Bubble( sc_module_name zName )
 	À compléter
 	
 	*/
+	SC_METHOD(thread);
 }
 
 
