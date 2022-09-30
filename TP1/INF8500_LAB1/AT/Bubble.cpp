@@ -19,7 +19,7 @@ Bubble::Bubble( sc_module_name zName )
 	À compléter
 	
 	*/
-	SC_METHOD(thread);
+	SC_CTHREAD(thread,clk.pos()); // Car il utilise la clock pour la synchronisation
 }
 
 

@@ -40,6 +40,16 @@ unsigned int Reader::Read(unsigned int uiAddr)
 
 	while(1) {
 
+		// Attendre une requete
+
+		// lire la valeur de l'adresse
+
+		// Demander la donnee a l'adresse lue
+
+		// envoyer ack => bubble
+
+		// enlever ack
+
 		/*
 		
 		À compléter
