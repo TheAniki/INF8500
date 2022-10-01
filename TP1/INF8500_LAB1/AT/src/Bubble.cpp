@@ -19,10 +19,9 @@ Bubble::Bubble( sc_module_name zName )
 	À compléter
 	
 	*/
-	SC_CTHREAD(interface, clk.pos()); // Car il utilise la clock pour la synchronisation
+	SC_CTHREAD(interface,clk.pos());
+
 }
-
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //	Destructeur
@@ -45,12 +44,28 @@ void Bubble::interface(void)
 	À compléter
 	
 	*/
+	// Attends le signal ack de Reader
+	wait(ack);
+	cout<<"bubble interface"<<endl;
 		
+	request.write(true);
+	request.write(false);
+
 	// Arrêt de la simulation
 	sc_stop();
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+//
+//	Swap method https://www.geeksforgeeks.org/bubble-sort/
+//
+///////////////////////////////////////////////////////////////////////////////
+void swap(unsigned int* xp, unsigned int* yp)
+{
+    unsigned int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
 ///////////////////////////////////////////////////////////////////////////////
 //
 //	bubbleSort
@@ -59,23 +74,11 @@ void Bubble::interface(void)
 void Bubble::bubbleSort(unsigned int *ptr, int counter)
 {
 	// Affichage avant tri
-	/*
 	
-	À compléter
-	
-	*/
 
-	// Tri
-	/*
+	// Tri, https://www.geeksforgeeks.org/bubble-sort/ 
 	
-	À compléter
-	
-	*/
 	
 	// Affichage après tri
-	/*
 	
-	À compléter
-	
-	*/
 }
