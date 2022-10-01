@@ -44,12 +44,16 @@ void Bubble::interface(void)
 	À compléter
 	
 	*/
+	unsigned int addr = 0x00;
+	this->address.write(addr);
+	this->request.write(true);
+	do{
+		wait(this->clk->posedge_event());
+	}while(!this->ack.read());
 	// Attends le signal ack de Reader
-	wait(ack);
 	cout<<"bubble interface"<<endl;
-		
-	request.write(true);
-	request.write(false);
+	this->request.write(false);	
+	wait(clk.posedge_event());	
 
 	// Arrêt de la simulation
 	sc_stop();
