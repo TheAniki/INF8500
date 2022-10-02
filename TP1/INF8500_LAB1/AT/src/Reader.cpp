@@ -13,12 +13,7 @@
 Reader::Reader(sc_module_name zName)
 : sc_module(zName)
 {
-	/*
-	
-	À compléter
-	
-	*/
-	SC_CTHREAD(interface,clk.pos()); // synchroniser avec la clk. 
+	SC_THREAD(interface); // synchroniser avec la clk. 
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,22 +38,17 @@ void Reader::interface(void)
 	{
 		// Attendre une requete
 		do{
-			wait(this->clk->posedge_event());	
+			wait(this->clk->posedge_event());
+			//enlever ack		
+			this->ack.write(false);		
 		}while(!this->request.read());
 		// lire la valeur de l'adresse
-		unsigned int add = this->address.read();
+		unsigned int addr = this->address.read();
 		
 		// Demander la donnee a l'adresse lue
-		this->data.write(dataPortRAM->Read(add));
-
-		cout<<"reader interface"<<endl;
+		this->data.write(dataPortRAM->Read(addr));
 		
 		// envoyer ack => bubble
-		this->ack.write(true);
-		// enlever ack	
-		do{
-			wait(this->clk->posedge_event());	
-		}while(!this->ack.read());
-		this->ack.write(false);		
+		this->ack.write(true);			
 	}
 }

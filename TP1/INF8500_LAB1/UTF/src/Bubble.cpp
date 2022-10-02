@@ -76,7 +76,7 @@ void Bubble::bubbleSort(unsigned int *ptr, int counter)
 {
 	// Affichage avant tri
 	cout<<"Avant =>"<<endl;
-	for (int i = 0; i < counter-1; i++)
+	for (int i = 0; i < counter; i++)
 	{
 		cout << "valeur : " << i << " | " << ptr[i] << endl;
 	}
@@ -90,7 +90,7 @@ void Bubble::bubbleSort(unsigned int *ptr, int counter)
 	
 	// Affichage après tri
 	cout<<"Apres =>"<<endl;
-	for (int i = 0; i < counter-1; i++)
+	for (int i = 0; i < counter; i++)
 	{
 		cout << "valeur : " << i << " | " << ptr[i] << endl;
 	}
