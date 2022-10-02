@@ -13,11 +13,8 @@
 Reader::Reader(sc_module_name zName)
 : sc_module(zName)
 {
-	/*
-	
-	À compléter
-	
-	*/
+	SC_THREAD(interface);
+	sensitive << clk.pos();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,9 +33,23 @@ Reader::~Reader()
 ///////////////////////////////////////////////////////////////////////////////
 void Reader::interface(void)
 {
-	/*
-	
-	À compléter
-	
-	*/
+	// Boucle infinie
+	while(1)
+	{
+		// Attendre une requete
+		do{
+			wait(1);
+		}while(!this->request.read());
+		// lire la valeur de l'adresse
+		unsigned int addr = this->address.read();
+		
+		// Demander la donnee a l'adresse lue
+		this->data.write(dataPortRAM->Read(addr));
+		
+		// envoyer ack => bubble
+		this->ack.write(true);
+		wait(1);
+		//enlever ack		
+		this->ack.write(false);	
+	}
 }

@@ -14,6 +14,7 @@ Reader::Reader(sc_module_name zName)
 : sc_module(zName)
 {
 	SC_THREAD(interface);
+	sensitive << clk.pos();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,9 +39,7 @@ void Reader::interface(void)
 	{
 		// Attendre une requete
 		do{
-			wait(this->clk->posedge_event());
-			//enlever ack		
-			this->ack.write(false);		
+			wait(1);					
 		}while(!this->request.read());
 		// lire la valeur de l'adresse
 		unsigned int addr = this->address.read();
@@ -49,6 +48,9 @@ void Reader::interface(void)
 		this->data.write(dataPortRAM->Read(addr));
 		
 		// envoyer ack => bubble
-		this->ack.write(true);			
+		this->ack.write(true);
+		wait(1);
+		//enlever ack		
+		this->ack.write(false);			
 	}
 }

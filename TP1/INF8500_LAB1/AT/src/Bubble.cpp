@@ -14,7 +14,8 @@
 Bubble::Bubble( sc_module_name zName )
 : sc_module(zName)
 {
-	SC_THREAD(interface); 
+	SC_THREAD(interface);
+	sensitive << clk.pos(); 
 }
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -41,7 +42,7 @@ void Bubble::interface(void)
 		this->request.write(true);
 		// Attends le signal ack
 		do{
-			wait(this->clk->posedge_event());
+			wait(1);
 		}while(!this->ack.read());
 			
 		elements.push_back(this->data.read());	
@@ -82,11 +83,11 @@ void Bubble::bubbleSort(unsigned int *ptr, int counter)
 	// Tri, https://www.geeksforgeeks.org/bubble-sort/ 
 	int i, j;
     for (i = 0; i < counter - 1; i++)
-        for (j = 0; j < counter - i - 1; j++)
-            if (ptr[j] > ptr[j + 1]){
+        for (j = 0; j < counter - i - 1; j++){
+            if (ptr[j] > ptr[j + 1])
 				swap(&ptr[j], &ptr[j + 1]);
-				wait(clk.posedge_event());
-			}
+			wait(1);
+		}
     std::cout<<std::endl<<"Bubble end "<<sc_time_stamp()<<std::endl;            
 	
 	// Affichage après tri
