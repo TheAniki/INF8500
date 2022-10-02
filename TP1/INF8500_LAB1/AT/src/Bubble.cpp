@@ -14,7 +14,7 @@
 Bubble::Bubble( sc_module_name zName )
 : sc_module(zName)
 {
-	SC_THREAD(interface); // synchroniser avec la clk. 
+	SC_THREAD(interface); 
 }
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -36,18 +36,17 @@ void Bubble::interface(void)
 	std::vector<unsigned int> elements;
 	int it = 0;
 	
-	do{
-		std::cout<<std::endl<<"Bubble Begin "<<sc_time_stamp()<<std::endl;
+	do{		
 		this->address.write(it*4);
 		this->request.write(true);
-		// Attends le signal ack de Reader
+		// Attends le signal ack
 		do{
 			wait(this->clk->posedge_event());
 		}while(!this->ack.read());
 			
 		elements.push_back(this->data.read());	
 		this->request.write(false);	
-		std::cout<<std::endl<<"Bubble end "<<sc_time_stamp()<<std::endl;	
+			
 	}while(elements[0]>=++it);
 	bubbleSort(&elements[1],elements[0]);
 
@@ -79,19 +78,21 @@ void Bubble::bubbleSort(unsigned int *ptr, int counter)
 	{
 		std::cout << "valeur : " << i << " | " << ptr[i] << std::endl;
 	}
-
+	std::cout<<std::endl<<"Bubble Begin "<<sc_time_stamp()<<std::endl;
 	// Tri, https://www.geeksforgeeks.org/bubble-sort/ 
 	int i, j;
     for (i = 0; i < counter - 1; i++)
         for (j = 0; j < counter - i - 1; j++)
-            if (ptr[j] > ptr[j + 1])
-                swap(&ptr[j], &ptr[j + 1]);
+            if (ptr[j] > ptr[j + 1]){
+				swap(&ptr[j], &ptr[j + 1]);
+				wait(clk.posedge_event());
+			}
+    std::cout<<std::endl<<"Bubble end "<<sc_time_stamp()<<std::endl;            
 	
 	// Affichage après tri
 	std::cout<<"Apres =>"<<std::endl;
 	for (int i = 0; i < counter; i++)
 	{
 		std::cout << "valeur : " << i << " | " << ptr[i] << std::endl;
-	}
-	
+	}	
 }

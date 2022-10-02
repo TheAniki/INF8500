@@ -13,7 +13,7 @@
 Reader::Reader(sc_module_name zName)
 : sc_module(zName)
 {
-	SC_THREAD(interface); // synchroniser avec la clk. 
+	SC_THREAD(interface);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
