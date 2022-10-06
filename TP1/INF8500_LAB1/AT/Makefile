@@ -1,5 +1,5 @@
-PROJETINC	=	'/home/ouassim/Desktop/INF8500/Lab1/INF8500/TP1/INF8500_LAB1/systemc/include'
-PROJETLIB	=	'/home/ouassim/Desktop/INF8500/Lab1/INF8500/TP1/INF8500_LAB1/systemc/lib'
+PROJETINC	=	'../systemc/include'
+PROJETLIB	=	'../systemc/lib'
 
 SRC_DIR := src
 OBJ_DIR := obj
