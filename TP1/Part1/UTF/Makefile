@@ -1,5 +1,5 @@
-PROJETINC	=	'../systemc/include'
-PROJETLIB	=	'../systemc/lib'
+PROJETINC	=	'../../../systemc/include'
+PROJETLIB	=	'../../../systemc/lib'
 
 SRC_DIR := src
 OBJ_DIR := obj
