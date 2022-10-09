@@ -45,9 +45,9 @@ CoProcessor::~CoProcessor()
 void CoProcessor::thread(void)
 {
 	// Variables locales
-	/*
-		À compléter
-	*/
+	unsigned int address = 0x0000;
+	unsigned int nbrElem;
+	std::vector<unsigned int> elements;
 
 
 	// Boucle infinie
@@ -55,14 +55,13 @@ void CoProcessor::thread(void)
 	{
 		
 	    // On attend une transaction 
-		/*
-			À compléter
-		*/
+		wait(this->CoProcessor_RW_OutPort.default_event());
 
 		//Lecture adresse
 		/*
 			À compléter
-		*/			
+		*/		
+		//address =	// aller voir https://github.com/drutrandafir/INF8500/blob/master/lab1/code%20de%20d%C3%A9part/Processeur_ISS_TLM/src/CoProcessor.cpp
 			
 		// Write (du point de vue du processeur)
 		/*
