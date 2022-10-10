@@ -45,42 +45,78 @@ CoProcessor::~CoProcessor()
 void CoProcessor::thread(void)
 {
 	// Variables locales
-	unsigned int address = 0x0000;
 	unsigned int nbrElem;
 	std::vector<unsigned int> elements;
-
 
 	// Boucle infinie
 	while(1)
 	{
 		
 	    // On attend une transaction 
-		wait(this->CoProcessor_RW_OutPort.default_event());
+		do {
+			wait(CoProcessor_Enable_InPort.default_event());
+		} while(!CoProcessor_Enable_InPort.read());
 
-		//Lecture adresse
-		/*
-			À compléter
-		*/		
-		//address =	// aller voir https://github.com/drutrandafir/INF8500/blob/master/lab1/code%20de%20d%C3%A9part/Processeur_ISS_TLM/src/CoProcessor.cpp
-			
-		// Write (du point de vue du processeur)
-		/*
-			À compléter. Selon l'adresse qui vient du processeur:
-				- Lecture et stockage du nombre d'éléments à trier et 
-				- lecture des éléments à trier
-				- Tri (appel à bubbleSort)
-				- Ne pas oublier d'utiliser les bons registres
-		*/
-			
-		// Read (du point de vue du processeur)
-		/*
-			À compléter. Selon l'adresse qui vient du processeur:
-				- Lecture du registre d'état du coprocesseur 
-				- lecture du nombre d'éléments à envoyer au processeur
-				- Lecture des élément triés
-		*/
+		//Lecture adresse			
+		switch(CoProcessor_Data_InPort.read())
+		{
+			// Write (du point de vue du processeur)
+			// Lecture et stockage du nombre d'éléments à trier
+			case 0x2000:
+				CoProcessor_Ready_OutPort.write(true);
+				do {
+					wait(CoProcessor_Enable_InPort.default_event());
+				} while(CoProcessor_Enable_InPort.read());
+				CoProcessor_Ready_OutPort.write(false);
 
+				nbrElem = CoProcessor_Data_InPort.read();
+				reg[0].write(nbrElem);
+				break;
+			// Lecture des éléments à trier et tri (appel à bubbleSort)
+			case 0x2001:
+				CoProcessor_Ready_OutPort.write(true);
+				do {
+					wait(CoProcessor_Enable_InPort.default_event());
+				} while(CoProcessor_Enable_InPort.read());
+				CoProcessor_Ready_OutPort.write(false);
+
+				elements.push_back(CoProcessor_Data_InPort.read());
+
+				if (elements.size() >= nbrElem) {
+					reg[2].write(0x0001);
+					bubbleSort(&elements.at(0), nbrElem);
+				}
+				break;
+			
+			// Read (du point de vue du processeur)
+			// Lecture du registre d'état du coprocesseur
+			case 0x2002:
+				CoProcessor_Data_OutPort.write(reg[2]);
+				CoProcessor_Ready_OutPort.write(true);
+
+			// Lecture du nombre d'éléments à envoyer au processeur
+			case 0x2003:
+			// Lecture des élément triés
+			case 0x2004:
+
+			default:
+				reg[2] = 0x0000;
+				elements.clear();
+				break;
+		}
 	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//	Swap method https://www.geeksforgeeks.org/bubble-sort/
+//
+///////////////////////////////////////////////////////////////////////////////
+void swap(unsigned int* xp, unsigned int* yp)
+{
+    unsigned int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
 }
 
 
@@ -91,9 +127,25 @@ void CoProcessor::thread(void)
 ///////////////////////////////////////////////////////////////////////////////
 void CoProcessor::bubbleSort(unsigned int *ptr, int n_elements)
 {
-	/*
+	// Affichage avant tri
+	cout<<"Avant =>"<<endl;
+	for (int i = 0; i < n_elements; i++)
+	{
+		cout << "[pos | val] : " << i << " | " << ptr[i] << endl;
+	}
 
-		À compléter. Ne pas oublier de modifier l'état du bon registre du coprocesseur à la fin du traitement (voir énoncé)
-
-	*/
+	// Tri, https://www.geeksforgeeks.org/bubble-sort/ 
+	int i, j;
+    for (i = 0; i < n_elements - 1; i++)
+        for (j = 0; j < n_elements - i - 1; j++)
+            if (ptr[j] > ptr[j + 1])
+                swap(&ptr[j], &ptr[j + 1]);
+	
+	// Affichage après tri
+	cout<<"Apres =>"<<endl;
+	for (int i = 0; i < n_elements; i++)
+	{
+		cout << "[pos | val] : " << i << " | " << ptr[i] << endl;
+	}
+	reg[2].write(0x0002);
 }
