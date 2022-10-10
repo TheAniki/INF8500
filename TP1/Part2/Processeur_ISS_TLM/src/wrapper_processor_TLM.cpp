@@ -74,9 +74,16 @@ void wrapper_processor_TLM::thread()
 		// Lecture
 		else /* Wrapper_RW_InPort.read() == true */
 		{
-			/*
-				À compléter. S'inspirer de l'écriture.
-			*/
+			// Occupé
+			Wrapper_Ready_OutPort.write(false);
+
+			// Récupère l'adresse
+			ulDestinationAddress = Wrapper_Address_InPort.read();
+			
+			// lecture sur le bus
+			busLT_read(ulDestinationAddress, (void*)&ulData, sizeof(unsigned int));
+
+			Wrapper_Data_OutPort.write(ulData);
 		}
 	}
 	
